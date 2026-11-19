@@ -16,7 +16,17 @@ class Cliente extends Model
         'telefono', 'email', 'direccion',
     ];
 
+    public function getNombreCompletoAttribute(): string
+    {
+        return "{$this->nombres} {$this->apellidos}";
+    }
+
     public function ordenes(): HasMany
+    {
+        return $this->hasMany(OrdenServicio::class);
+    }
+
+    public function ordenesServicio(): HasMany
     {
         return $this->hasMany(OrdenServicio::class);
     }

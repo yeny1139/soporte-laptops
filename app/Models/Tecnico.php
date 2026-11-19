@@ -21,12 +21,22 @@ class Tecnico extends Model
         return ['activo' => 'boolean'];
     }
 
+    public function getNombreCompletoAttribute(): string
+    {
+        return "{$this->nombres} {$this->apellidos}";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     public function ordenes(): HasMany
+    {
+        return $this->hasMany(OrdenServicio::class);
+    }
+
+    public function ordenesServicio(): HasMany
     {
         return $this->hasMany(OrdenServicio::class);
     }
