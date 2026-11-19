@@ -10,15 +10,29 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TecnicoFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'user_id'        => null,
+            'dni'            => fake()->unique()->numerify('########'),
+            'nombres'        => fake()->firstName(),
+            'apellidos'      => fake()->lastName() . ' ' . fake()->lastName(),
+            'especialidad'   => fake()->randomElement([
+                'Hardware y Placas Base',
+                'Sistemas Operativos y Software',
+                'Pantallas y Bisagras',
+                'Mantenimiento Térmico y Limpieza',
+                'Redes y Conectividad',
+            ]),
+            'codigo_tecnico' => 'TEC-' . fake()->unique()->numerify('###'),
+            'activo'         => true,
         ];
+    }
+
+    public function inactivo(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'activo' => false,
+        ]);
     }
 }
